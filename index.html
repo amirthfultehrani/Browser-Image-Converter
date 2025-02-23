@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Converter</title>
+  <!-- Using Tailwind CSS for styling -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto p-4">
+    <!-- Main heading of the application -->
+    <h1 class="text-3xl font-bold text-center mb-6" role="heading" aria-level="1">Image Converter</h1>
+
+    <!-- Drag-and-Drop Zone for image uploads -->
+    <div id="drop-zone" class="border-4 border-dashed border-gray-300 rounded-lg p-6 mb-4 text-center bg-white hover:border-blue-500 transition" role="region" aria-label="Drag and drop images here or click to select files" tabindex="0">
+      <p class="text-gray-500">Drag and drop images here or click to select files</p>
+      <!-- Hidden file input for selecting images -->
+      <input type="file" id="file-input" multiple accept="image/*" class="hidden" aria-label="Select image files">
+    </div>
+
+    <!-- Preview Area to display uploaded images -->
+    <div id="preview-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4" role="region" aria-label="Preview of uploaded images"></div>
+
+    <!-- Edit Controls for image manipulation -->
+    <div id="edit-controls" class="mb-4 hidden" role="region" aria-label="Edit image controls">
+      <h2 class="text-xl font-bold mb-2" role="heading" aria-level="2">Edit Image</h2>
+      <!-- Canvas for live preview of edits -->
+      <div class="mb-2">
+        <canvas id="edit-preview" class="border border-gray-300 rounded mb-4" aria-label="Live preview of edited image"></canvas>
+      </div>
+      <!-- Input for crop width -->
+      <div class="mb-2">
+        <label for="crop-width" class="block text-gray-700">Crop Width:</label>
+        <input type="number" id="crop-width" class="border border-gray-300 rounded p-2 w-full" min="1" aria-label="Crop width in pixels">
+      </div>
+      <!-- Input for crop height -->
+      <div class="mb-2">
+        <label for="crop-height" class="block text-gray-700">Crop Height:</label>
+        <input type="number" id="crop-height" class="border border-gray-300 rounded p-2 w-full" min="1" aria-label="Crop height in pixels">
+      </div>
+      <!-- Input for resize width -->
+      <div class="mb-2">
+        <label for="resize-width" class="block text-gray-700">Resize Width:</label>
+        <input type="number" id="resize-width" class="border border-gray-300 rounded p-2 w-full" min="1" aria-label="Resize width in pixels">
+      </div>
+      <!-- Input for resize height -->
+      <div class="mb-2">
+        <label for="resize-height" class="block text-gray-700">Resize Height:</label>
+        <input type="number" id="resize-height" class="border border-gray-300 rounded p-2 w-full" min="1" aria-label="Resize height in pixels">
+      </div>
+      <!-- Input for rotate angle -->
+      <div class="mb-2">
+        <label for="rotate-angle" class="block text-gray-700">Rotate Angle (degrees):</label>
+        <input type="number" id="rotate-angle" class="border border-gray-300 rounded p-2 w-full" min="0" max="360" aria-label="Rotate angle in degrees">
+      </div>
+      <!-- Button to apply the edits -->
+      <button id="apply-edit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition" aria-label="Apply image edits">Apply Edit</button>
+    </div>
+
+    <!-- Format Selection for choosing output image format -->
+    <div class="mb-4" role="region" aria-label="Select output format">
+      <label for="format-select" class="block text-gray-700 mb-2">Output Format:</label>
+      <select id="format-select" class="border border-gray-300 rounded p-2 w-full" aria-label="Select output image format">
+        <option value="PNG">PNG</option>
+        <option value="JPEG">JPEG</option>
+        <option value="WEBP">WEBP</option>
+        <option value="GIF">GIF</option>
+        <option value="BMP">BMP</option>
+      </select>
+    </div>
+
+    <!-- Convert Button to start the conversion process -->
+    <button id="convert-btn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full" disabled aria-label="Convert selected images">Convert Images</button>
+
+    <!-- Progress Bar to show the conversion progress -->
+    <div id="progress-container" class="mt-4 hidden" role="region" aria-label="Conversion progress">
+      <div class="w-full bg-gray-200 rounded-full h-4">
+        <div id="progress-bar" class="bg-blue-500 h-4 rounded-full" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p id="progress-text" class="text-center mt-2 text-gray-700">Processing: 0%</p>
+    </div>
+  </div>
+
+  <!-- External libraries for handling GIF, BMP, EXIF data, and ZIP functionality -->
+  <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-to-bmp@1.0.0/canvas-to-bmp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exif-js@2.3.0/exif.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <!-- Main JavaScript file -->
+  <script src="js/main.js" type="module"></script>
+</body>
+</html>
